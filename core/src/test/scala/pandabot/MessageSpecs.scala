@@ -1,4 +1,4 @@
-package sk.drunkenpanda.bot
+package pandabot
 
 import org.scalatest.{ Matchers, FlatSpec }
 

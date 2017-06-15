@@ -1,4 +1,4 @@
-package sk.drunkenpanda.bot.io
+package pandabot.io
 
 import java.util.concurrent.{ Executors, ExecutorService }
 
@@ -10,7 +10,7 @@ import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{ BeforeAndAfterEach, FlatSpec, Matchers }
-import sk.drunkenpanda.bot.{ Join, Message, Response }
+import pandabot.{ Join, Message, Response }
 
 /**
  * @author Jan Ferko

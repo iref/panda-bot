@@ -1,6 +1,6 @@
-package sk.drunkenpanda.bot.plugins
+package pandabot.plugins
 
-import sk.drunkenpanda.bot.Message
+import pandabot.Message
 
 trait PluginModule {
   def plugins: Set[Plugin]

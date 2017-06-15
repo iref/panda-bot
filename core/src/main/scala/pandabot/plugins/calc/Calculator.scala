@@ -1,9 +1,9 @@
-package sk.drunkenpanda.bot.plugins.calc
+package pandabot.plugins.calc
 
 import scala.util.matching.Regex
 import cats.syntax.either._
-import sk.drunkenpanda.bot.{ Message, PrivateMessage, Response }
-import sk.drunkenpanda.bot.plugins.Plugin
+import pandabot.{ Message, PrivateMessage, Response }
+import pandabot.plugins.Plugin
 
 /**
  * Calculates result of [[Expression]].

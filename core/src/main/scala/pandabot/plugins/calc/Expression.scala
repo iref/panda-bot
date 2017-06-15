@@ -1,4 +1,4 @@
-package sk.drunkenpanda.bot.plugins.calc
+package pandabot.plugins.calc
 
 /**
  * Abstract Syntax Tree for simple numeric expressions.
