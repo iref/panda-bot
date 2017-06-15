@@ -1,7 +1,7 @@
 import scoverage.ScoverageKeys._
 
 lazy val buildSettings = Seq(
-  organization := "com.github.iref",
+  organization := "me.janferko",
   version := "1.0",
   scalaVersion := "2.12.2",
   crossScalaVersions := Seq("2.12.2", "2.11.11")
