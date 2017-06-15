@@ -1,10 +1,10 @@
-package sk.drunkenpanda.bot
+package pandabot
 
-import sk.drunkenpanda.bot.io.NetworkIrClient
-import sk.drunkenpanda.bot.plugins.AbstractPluginModule
-import sk.drunkenpanda.bot.plugins.EchoPlugin
-import sk.drunkenpanda.bot.plugins.PongPlugin
-import sk.drunkenpanda.bot.plugins.calc.{ Calculator, ExpressionParser, CalculatorPlugin }
+import pandabot.io.NetworkIrClient
+import pandabot.plugins.AbstractPluginModule
+import pandabot.plugins.EchoPlugin
+import pandabot.plugins.PongPlugin
+import pandabot.plugins.calc.{ Calculator, ExpressionParser, CalculatorPlugin }
 
 object App {
 

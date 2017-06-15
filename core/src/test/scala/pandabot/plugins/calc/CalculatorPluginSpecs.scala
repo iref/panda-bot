@@ -1,15 +1,15 @@
-package sk.drunkenpanda.bot.plugins.calc
+package pandabot.plugins.calc
 
 import cats.syntax.either._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{ Matchers, FlatSpec }
 import org.mockito.Mockito._
-import sk.drunkenpanda.bot.Notice
-import sk.drunkenpanda.bot.Ping
-import sk.drunkenpanda.bot.Pong
-import sk.drunkenpanda.bot.PrivateMessage
-import sk.drunkenpanda.bot.Response
-import sk.drunkenpanda.bot.Unknown
+import pandabot.Notice
+import pandabot.Ping
+import pandabot.Pong
+import pandabot.PrivateMessage
+import pandabot.Response
+import pandabot.Unknown
 
 class CalculatorPluginSpecs extends FlatSpec with Matchers with MockitoSugar {
   import Expression._

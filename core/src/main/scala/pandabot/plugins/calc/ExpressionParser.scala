@@ -1,4 +1,4 @@
-package sk.drunkenpanda.bot.plugins.calc
+package pandabot.plugins.calc
 
 import fastparse.all._
 

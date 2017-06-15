@@ -1,4 +1,4 @@
-package sk.drunkenpanda.bot.io
+package pandabot.io
 
 import java.io._
 import java.net.Socket

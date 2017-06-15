@@ -1,10 +1,10 @@
-package sk.drunkenpanda.bot.plugins
+package pandabot.plugins
 
-import sk.drunkenpanda.bot.Message
-import sk.drunkenpanda.bot.Ping
-import sk.drunkenpanda.bot.Pong
-import sk.drunkenpanda.bot.PrivateMessage
-import sk.drunkenpanda.bot.Response
+import pandabot.Message
+import pandabot.Ping
+import pandabot.Pong
+import pandabot.PrivateMessage
+import pandabot.Response
 
 trait Plugin {
   def respond(message: Message): Option[Message]

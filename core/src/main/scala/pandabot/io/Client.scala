@@ -1,11 +1,11 @@
-package sk.drunkenpanda.bot.io
+package pandabot.io
 
 import java.util.concurrent.{ Executors, ExecutorService }
 
 import scala.util.Try
 
 import rx.lang.scala.Observable
-import sk.drunkenpanda.bot.{ Join, Message }
+import pandabot.{ Join, Message }
 
 trait IrcClient {
   def source: ConnectionSource

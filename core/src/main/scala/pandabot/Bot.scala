@@ -1,8 +1,8 @@
-package sk.drunkenpanda.bot
+package pandabot
 
 import rx.lang.scala.Subscription
-import sk.drunkenpanda.bot.io._
-import sk.drunkenpanda.bot.plugins.PluginModule
+import pandabot.io._
+import pandabot.plugins.PluginModule
 
 class Bot(ircClient: IrcClient, pluginModule: PluginModule) {
 

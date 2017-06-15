@@ -1,4 +1,4 @@
-package sk.drunkenpanda.bot
+package pandabot
 
 sealed trait Message
 

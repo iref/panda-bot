@@ -1,12 +1,12 @@
-package sk.drunkenpanda.bot.plugins
+package pandabot.plugins
 
 import org.scalatest.{ Matchers, FlatSpec }
-import sk.drunkenpanda.bot.Notice
-import sk.drunkenpanda.bot.Ping
-import sk.drunkenpanda.bot.Pong
-import sk.drunkenpanda.bot.PrivateMessage
-import sk.drunkenpanda.bot.Response
-import sk.drunkenpanda.bot.Unknown
+import pandabot.Notice
+import pandabot.Ping
+import pandabot.Pong
+import pandabot.PrivateMessage
+import pandabot.Response
+import pandabot.Unknown
 
 class EchoPluginSpecs extends FlatSpec with Matchers {
 

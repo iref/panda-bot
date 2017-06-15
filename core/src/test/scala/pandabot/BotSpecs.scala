@@ -1,9 +1,9 @@
-package sk.drunkenpanda.bot
+package pandabot
 
 import java.util.concurrent.Executors
 
 import org.scalatest.{ Matchers, FlatSpec }
-import sk.drunkenpanda.bot.io.{ ConnectionSource, IrcClient }
+import pandabot.io.{ ConnectionSource, IrcClient }
 
 import scala.util.{ Success, Try }
 
