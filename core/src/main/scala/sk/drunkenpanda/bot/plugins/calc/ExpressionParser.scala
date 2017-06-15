@@ -1,52 +1,85 @@
 package sk.drunkenpanda.bot.plugins.calc
 
-import scala.util.{ Failure, Success, Try }
+import fastparse.all._
 
-import org.parboiled.errors.{ ErrorUtils, ParsingException }
-import org.parboiled.scala._
+/**
+ * Parses [[Expression]] from string values.
+ *
+ * Parser uses following grammar:
+ *
+ * ## Language:
+ * 0-9, '*', '+', '/', '-', '^', '(', ')', '.'
+ *
+ * ## Rules
+ * ```
+ * InputLine := InputEnd
+ * Input := Term (['+'|'-'] Term)*
+ * Term := Factor (['*'|'/'|'^'] Factor)*
+ * Factor := Fraction | Parents
+ * Parents := '(' Input ')'
+ * Fraction := '-'* Digits | '-'* Digits Decimal*
+ * Digits := [0-9]+
+ * Decimal := '.'Digits
+ * ```
+ */
+class ExpressionParser {
+  import Expression._
 
-class ExpressionParser extends Parser {
+  // Grammar Definition
+  private val InputLine = P(Input ~ End)
 
-  private def InputLine = rule { Input ~ EOI }
+  private val Input: P[Expression] = P(Term ~ (CharIn("+-").! ~/ Term).rep).map(eval)
 
-  private def Input: Rule1[Expression] = Term ~ zeroOrMore(
-    "+" ~ Term ~~> binaryOperator("+") _ |
-      "-" ~ Term ~~> binaryOperator("-") _
-  )
+  private val Term = P(Factor ~ (CharIn("*/^").! ~/ Factor).rep).map(eval)
 
-  private def Term = rule {
-    Factor ~ zeroOrMore(
-      "*" ~ Factor ~~> binaryOperator("*") _ |
-        "/" ~ Factor ~~> binaryOperator("/") _ |
-        "^" ~ Factor ~~> binaryOperator("^") _
-    )
+  private val Factor = P(Fraction | Parents)
+
+  private val Parents = P("(" ~/ Input ~ ")")
+
+  // `.?` is optional
+  // `.!` captures parsed Input
+  private val Fraction = P(("-".? ~ Digits ~ Decimals.?).!).map(Number.apply)
+
+  private val Digits = P(CharIn('0' to '9').rep(min=1))
+
+  private val Decimals = P("." ~ Digits)
+
+  // AST parsing
+
+  /**
+   * Folds Fastparse tree into single expression.
+   */
+  private def eval(tree: (Expression, Seq[(String, Expression)])) = {
+    val (base, opt) = tree
+    opt.foldLeft(base)(evalOperator)
   }
 
-  private def NegativeFraction = rule { "-" ~ Fraction ~~> (a => UnaryOperator("-", a)) }
-
-  private def Factor = rule { Fraction | Parents | NegativeFraction }
-
-  private def Parents = rule { "(" ~ Input ~ ")" }
-
-  private def Fraction = rule {
-    group(oneOrMore("1" - "9") ~
-      optional("." ~ oneOrMore(Digits))) ~>
-      ((value: String) => Number(value))
-  }
-
-  private def Digits = rule { oneOrMore("0" - "9") }
-
-  private def binaryOperator(symbol: String)(a: Expression, b: Expression): Expression =
-    BinaryOperator(symbol, a, b)
-
-  def parse(value: String): Expression = {
-    val parseRunner = ReportingParseRunner(InputLine)
-    val parsingResult = parseRunner.run(value)
-    parsingResult.result match {
-      case Some(expr) => expr
-      case None => throw new ParsingException(
-        ErrorUtils.printParseErrors(parsingResult)
-      )
+  /**
+   * Creates binary expression based on mathematical operator and already parsed operands.
+   */
+  private def evalOperator(left: Expression, opAndRightExpr: (String, Expression)) = {
+    val (op, right) = opAndRightExpr
+    op match {
+      case "+" => Add(left, right)
+      case "-" => Subtract(left, right)
+      case "*" => Multiply(left, right)
+      case "/" => Divide(left, right)
+      case "^" => Power(left, right)
     }
   }
+
+  /**
+   * Tries to parse expression from `value`.
+   * If parsing succeeds, it returns right either that contains parsed expression.
+   * Otherwise, it returns left either that contains message describing failure.
+   */
+  def parse(value: String): Either[String, Expression] =
+    try {
+      InputLine.parse(value) match {
+        case Parsed.Success(expr, _) => Right(expr)
+        case failure: Parsed.Failure => Left(failure.msg)
+      }
+    } catch {
+      case e: Exception => Left(e.toString)
+    }
 }
