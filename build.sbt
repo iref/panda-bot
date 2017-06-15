@@ -30,7 +30,7 @@ lazy val dependencies = Seq(
   "org.typelevel" %% "cats-core"       % "0.9.0",
   "io.reactivex"  %% "rxscala"         % "0.26.5",
   "com.lihaoyi"   %% "fastparse"       % "0.4.3",
-  "org.scalatest" %% "scalatest"       % "3.0.1" % "test",
+  "org.scalatest" %% "scalatest"       % "3.0.3" % "test",
   "org.mockito"   %  "mockito-all"     % "1.9.5" % "test"
 )
 
