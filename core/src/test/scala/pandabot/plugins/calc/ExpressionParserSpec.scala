@@ -1,8 +1,8 @@
 package pandabot.plugins.calc
 
-import org.scalatest.{ EitherValues, FlatSpec, Matchers }
+import pandabot.PandaBotSpec
 
-class ExpressionParserSpecs extends FlatSpec with Matchers with EitherValues {
+class ExpressionParserSpecs extends PandaBotSpec {
   import Expression._
 
   val parser = new ExpressionParser

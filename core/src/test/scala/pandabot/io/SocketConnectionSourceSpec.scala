@@ -2,12 +2,11 @@ package pandabot.io
 
 import java.io.{ ByteArrayOutputStream, ByteArrayInputStream }
 import java.net.Socket
-
 import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{ BeforeAndAfterEach, Matchers, FlatSpec }
+import org.scalatest.BeforeAndAfterEach
+import pandabot.PandaBotSpec
 
-class SocketConnectionSourceSpec extends FlatSpec with Matchers with MockitoSugar with BeforeAndAfterEach {
+class SocketConnectionSourceSpec extends PandaBotSpec with BeforeAndAfterEach {
 
   val socket = mock[Socket]
   val socketSource = SocketConnectionSource(socket)

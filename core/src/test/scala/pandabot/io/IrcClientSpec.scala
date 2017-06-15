@@ -1,21 +1,18 @@
 package pandabot.io
 
 import java.util.concurrent.{ Executors, ExecutorService }
-
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.util.{ Failure, Success }
-
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{ BeforeAndAfterEach, FlatSpec, Matchers }
-import pandabot.{ Join, Message, Response }
+import org.scalatest.BeforeAndAfterEach
+import pandabot.{ PandaBotSpec, Join, Message, Response }
 
 /**
  * @author Jan Ferko
  */
-class IrcClientSpec extends FlatSpec with Matchers with MockitoSugar with BeforeAndAfterEach {
+class IrcClientSpec extends PandaBotSpec with BeforeAndAfterEach {
 
   val mockConnectionSource = mock[ConnectionSource]
 

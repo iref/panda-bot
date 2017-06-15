@@ -1,14 +1,8 @@
 package pandabot.plugins
 
-import org.scalatest.{ Matchers, FlatSpec }
-import pandabot.Notice
-import pandabot.Ping
-import pandabot.Pong
-import pandabot.PrivateMessage
-import pandabot.Response
-import pandabot.Unknown
+import pandabot._
 
-class EchoPluginSpecs extends FlatSpec with Matchers {
+class EchoPluginSpecs extends PandaBotSpec {
 
   val echoPlugin = new EchoPlugin()
 

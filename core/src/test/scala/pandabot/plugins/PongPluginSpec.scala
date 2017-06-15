@@ -1,14 +1,8 @@
 package pandabot.plugins
 
-import org.scalatest.{ Matchers, FlatSpec }
-import pandabot.Notice
-import pandabot.Ping
-import pandabot.Pong
-import pandabot.PrivateMessage
-import pandabot.Response
-import pandabot.Unknown
+import pandabot._
 
-class PongPluginSpecs extends FlatSpec with Matchers {
+class PongPluginSpecs extends PandaBotSpec {
 
   val pongPlugin = new PongPlugin()
 

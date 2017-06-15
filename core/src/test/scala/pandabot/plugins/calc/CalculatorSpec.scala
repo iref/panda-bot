@@ -1,8 +1,8 @@
 package pandabot.plugins.calc
 
-import org.scalatest.{ Matchers, FlatSpec }
+import pandabot.PandaBotSpec
 
-class CalculatorSpecs extends FlatSpec with Matchers {
+class CalculatorSpec extends PandaBotSpec {
   import Expression._
 
   val calculator = new Calculator()
