@@ -1,11 +1,10 @@
 import scoverage.ScoverageKeys._
 
-
 lazy val buildSettings = Seq(
   organization := "com.github.iref",
   version := "1.0",
-  scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.11.8", "2.12.1")
+  scalaVersion := "2.12.2",
+  crossScalaVersions := Seq("2.12.2", "2.11.11")
 )
 
 lazy val compilerOptions = Seq(
@@ -21,7 +20,6 @@ lazy val compilerOptions = Seq(
   "-Ywarn-numeric-widen"
 )
 
-
 lazy val repositories = Seq(
   "typesafe" at "http://repo.typesafe.com/typesafe/releases/",
   Resolver.sonatypeRepo("releases"),
@@ -32,7 +30,7 @@ lazy val dependencies = Seq(
   "org.typelevel" %% "cats-core"       % "0.9.0",
   "io.reactivex"  %% "rxscala"         % "0.26.5",
   "com.lihaoyi"   %% "fastparse"       % "0.4.3",
-  "org.scalatest" %% "scalatest"       % "3.0.1" % "test",
+  "org.scalatest" %% "scalatest"       % "3.0.3" % "test",
   "org.mockito"   %  "mockito-all"     % "1.9.5" % "test"
 )
 
