@@ -26,4 +26,13 @@ object Err {
   final case class BannedCharacter(parameterName: String, parameterValue: String, bannedCharacter: String) extends ParameterErr {
     def message = s"$parameterDescription must not contain $bannedCharacter"
   }
+
+  final case class BlankParameter(parameterName: String) extends ParameterErr {
+    def parameterValue = ""
+
+    def message = s"$parameterDescription must not be blank."
+
+    override def parameterDescription = parameterName
+
+  }
 }
