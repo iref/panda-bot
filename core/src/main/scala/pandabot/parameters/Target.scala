@@ -1,6 +1,7 @@
-package pandabot
+package pandabot.parameters
 
 import cats.syntax.either._
+import pandabot.Err
 
 /**
  * Identifies entity that can send and receive IRC messages, e.g. user or channel.

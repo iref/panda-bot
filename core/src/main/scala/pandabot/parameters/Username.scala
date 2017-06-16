@@ -1,6 +1,7 @@
-package pandabot
+package pandabot.parameters
 
 import cats.syntax.either._
+import pandabot.Err
 
 final case class Username(value: String)
 

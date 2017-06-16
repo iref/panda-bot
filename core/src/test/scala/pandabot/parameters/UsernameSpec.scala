@@ -1,4 +1,6 @@
-package pandabot
+package pandabot.parameters
+
+import pandabot.{Err, PandaBotSpec}
 
 class UsernameSpec extends PandaBotSpec {
 

@@ -1,7 +1,8 @@
-package pandabot
+package pandabot.parameters
+
+import pandabot.{ Err, PandaBotSpec }
 
 class TargetSpec extends PandaBotSpec {
-  behavior of "Target"
 
   it should "reject channel names that don't start with #" in {
     val channel = Target.channel("abcdef")
