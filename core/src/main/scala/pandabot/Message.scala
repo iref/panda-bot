@@ -1,42 +1,50 @@
 package pandabot
 
-sealed trait Message
+import cats.data.NonEmptyList
+import pandabot.parameters._
 
-case object Unknown extends Message
-
-case class PrivateMessage(from: String, text: String) extends Message
-case class Response(to: String, text: String) extends Message
-case class Ping(hash: String) extends Message
-case class Pong(hash: String) extends Message
-case class Notice(note: String) extends Message
-case class Join(channel: String) extends Message
-case class Leave(channel: String) extends Message
-case class User(username: String, realName: String) extends Message
-case class Nick(nickname: String) extends Message
+/**
+ * IRC protocol message.
+ */
+sealed abstract class Message extends Product with Serializable {
+  /**
+   * Message code as defined in RFC, e.g. PRIVMSG or 402.
+   */
+  def code: String
+}
 
 object Message {
-
-  lazy val privateMessagePattern = ".*PRIVMSG (\\S+) :(.+)".r
-
-  lazy val pingPattern = ".*PING :(\\S+)".r
-
-  lazy val noticePattern = ".*NOTICE :(.+)".r
-
-  def parse(message: String): Message = message match {
-    case privateMessagePattern(from, text) => new PrivateMessage(from, text)
-    case pingPattern(hash) => Ping(hash)
-    case noticePattern(note) => new Notice(note)
-    case _ => Unknown
+  /**
+   *
+   */
+  final case class ChatMessage(target: Target, text: String) extends Message {
+    val code = "PRIVMSG"
   }
-
-  def print(message: Message): String = message match {
-    case Response(to, text) => s"PRIVMSG $to :$text"
-    case Pong(hash) => s"PONG :$hash"
-    case Notice(note) => s"NOTICE :$note"
-    case Join(channel) => s"JOIN $channel"
-    case Leave(channel) => s"PART $channel"
-    case User(username, realName) => s"USER $username 0 * :$realName"
-    case Nick(nickname) => s"NICK $nickname"
-    case _ => ""
+  final case class Ping(hash: String) extends Message {
+    val code = "PING"
+  }
+  final case class Pong(hash: String) extends Message {
+    val code = "PONG"
+  }
+  final case class Notice(target: Target, note: String) extends Message {
+    val code = "NOTICE"
+  }
+  final case class Join(channels: NonEmptyList[Target.Channel], passwords: List[String]) extends Message {
+    val code = "JOIN"
+  }
+  final case class Leave(channels: NonEmptyList[Target.Channel]) extends Message {
+    val code = "PART"
+  }
+  final case class User(username: Username, serverName: Hostname, hostname: Hostname, realName: String) extends Message {
+    val code = "USER"
+  }
+  final case class Nick(nickname: Target.Nickname) extends Message {
+    val code = "NICK"
+  }
+  final case class Pass(password: String) extends Message {
+    val code = "PASS"
+  }
+  final case class Numeric(numCode: Int, raw: Option[String] = None) extends Message {
+    def code = numCode.toString
   }
 }

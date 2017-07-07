@@ -6,7 +6,9 @@ import pandabot.Err
 /**
  * Identifies entity that can send and receive IRC messages, e.g. user or channel.
  */
-sealed abstract class Target extends Product with Serializable
+sealed abstract class Target extends Product with Serializable {
+  def value: String
+}
 
 /** Target Factory. */
 object Target {

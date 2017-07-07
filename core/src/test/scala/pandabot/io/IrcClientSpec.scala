@@ -7,12 +7,14 @@ import scala.util.{ Failure, Success }
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
-import pandabot.{ PandaBotSpec, Join, Message, Response }
+import pandabot.PandaBotSpec
+import pandabot.parameters.Target
 
 /**
  * @author Jan Ferko
  */
 class IrcClientSpec extends PandaBotSpec with BeforeAndAfterEach {
+  import pandabot.Message._
 
   val mockConnectionSource = mock[ConnectionSource]
 
@@ -41,9 +43,9 @@ class IrcClientSpec extends PandaBotSpec with BeforeAndAfterEach {
   }
 
   it should "write message value to source" in {
-    val msg = Response("#drunkenpandas", "Hello from IrcClient spec... Everything is looking good")
+    val msg = ChatMessage(Target.Channel("#drunkenpandas"), "Everything is looking good")
     ircClient.write(msg)
-    verify(mockConnectionSource).write(Message.print(msg))
+    verify(mockConnectionSource).write("PRIVMSG #drunkenpandas :Everything is looking good")
   }
 
   it should "shutdown source on client shutdown" in {
@@ -60,9 +62,7 @@ class IrcClientSpec extends PandaBotSpec with BeforeAndAfterEach {
 
     // then
     Await.ready(messages.toBlocking.toFuture, 1.second)
-    channels.map(ch => Message.print(Join(ch))).foreach { msg =>
-      verify(mockConnectionSource).write(msg)
-    }
+    verify(mockConnectionSource).write(s"JOIN " + channels.mkString(","))
   }
 
   it should "notifies subscribers on error" in {

@@ -1,17 +1,21 @@
 package pandabot.plugins
 
-import pandabot._
+import pandabot.PandaBotSpec
+import pandabot.parameters.Target
 
 class EchoPluginSpecs extends PandaBotSpec {
+  import pandabot.Message._
 
   val echoPlugin = new EchoPlugin()
+
+  val octocat = Target.Nickname("panda-bot")
 
   behavior of "EchoPlugin"
 
   it should "respond to private messages, that start with 'panda echo'" in {
-    val message = new PrivateMessage("#mychannel", "panda echo this is awesome test.")
-    val expectedResponse = new Response(
-      "#mychannel",
+    val message = ChatMessage(octocat, "panda echo this is awesome test.")
+    val expectedResponse = ChatMessage(
+      octocat,
       "this is awesome test test test test."
     )
 
@@ -19,10 +23,9 @@ class EchoPluginSpecs extends PandaBotSpec {
   }
 
   it should "not respond to other messages than private" in {
-    echoPlugin.respond(Unknown) should not be defined
-    echoPlugin.respond(new Ping("pingpong")) should not be defined
-    echoPlugin.respond(new Pong("pongping")) should not be defined
-    echoPlugin.respond(new Notice("note")) should not be defined
+    echoPlugin.respond(Ping("pingpong")) should not be defined
+    echoPlugin.respond(Pong("pongping")) should not be defined
+    echoPlugin.respond(Notice(octocat, "note")) should not be defined
   }
 
   it should "parse text, that starts with 'panda echo'" in {
@@ -42,15 +45,15 @@ class EchoPluginSpecs extends PandaBotSpec {
 
   it should "prepare message if there is some text" in {
     val text = "this is awesome message, it has to be sent"
-    echoPlugin.prepareResponse("toMe", text, "") should equal(
-      Response("toMe", s"${text} sent sent sent")
+    echoPlugin.prepareResponse(octocat, text, "") should equal(
+      ChatMessage(octocat, s"${text} sent sent sent")
     )
   }
 
   it should "prepare message with suffix" in {
     val message = "this is awesome message"
-    echoPlugin.prepareResponse("toMe", message, "!!") should equal(
-      Response("toMe", "this is awesome message message message message!!")
+    echoPlugin.prepareResponse(octocat, message, "!!") should equal(
+      ChatMessage(octocat, "this is awesome message message message message!!")
     )
   }
 }

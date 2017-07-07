@@ -10,7 +10,7 @@ class Bot(ircClient: IrcClient, pluginModule: PluginModule) {
     // check and handle errors
     ircClient.connect(username, nickname, realName)
     ircClient.listen(channels).filter(!_.isEmpty)
-      .map(s => Message.parse(s))
+      .map(s => ???)
       .map(pluginModule.process(_))
       .subscribe(
         responseMessages => {

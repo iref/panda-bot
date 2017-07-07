@@ -1,10 +1,7 @@
 package pandabot.plugins
 
 import pandabot.Message
-import pandabot.Ping
-import pandabot.Pong
-import pandabot.PrivateMessage
-import pandabot.Response
+import pandabot.parameters.Target
 
 trait Plugin {
   def respond(message: Message): Option[Message]
@@ -19,15 +16,15 @@ class EchoPlugin extends Plugin {
   private lazy val echoCount = 3
 
   override def respond(message: Message): Option[Message] = message match {
-    case PrivateMessage(from, text) => for {
+    case Message.ChatMessage(from, text) => for {
       (msg, suffix) <- parseText(text)
     } yield prepareResponse(from, msg, suffix)
     case _ => None
   }
 
-  def prepareResponse(to: String, message: String, suffix: String): Message = {
+  def prepareResponse(to: Target, message: String, suffix: String): Message = {
     val echo = List.fill(echoCount)(message.split(" ").last).mkString(" ")
-    Response(to, s"$message $echo$suffix")
+    Message.ChatMessage(to, s"$message $echo$suffix")
   }
 
   def parseText(text: String): Option[(String, String)] = text match {
@@ -42,7 +39,7 @@ class EchoPlugin extends Plugin {
 class PongPlugin extends Plugin {
 
   override def respond(message: Message) = message match {
-    case Ping(hash) => Option(new Pong(hash))
+    case Message.Ping(hash) => Option(Message.Pong(hash))
     case _ => None
   }
 

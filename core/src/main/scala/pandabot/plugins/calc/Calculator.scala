@@ -2,7 +2,7 @@ package pandabot.plugins.calc
 
 import scala.util.matching.Regex
 import cats.syntax.either._
-import pandabot.{ Message, PrivateMessage, Response }
+import pandabot.Message
 import pandabot.plugins.Plugin
 
 /**
@@ -23,7 +23,7 @@ class Calculator {
 
 /**
  * Plugin for doing simple math.
- * It handles only incoming [[PrivateMessage]].
+ * It handles only incoming [[Message.ChatMessage]].
  * Message must be in format `panda compute <expression>,* please`
  *
  * @param calculator calculates results of expressions
@@ -34,7 +34,7 @@ class CalculatorPlugin(calculator: Calculator, parser: ExpressionParser) extends
   private lazy val format: Regex = "panda compute ([\\S ]+?), please".r
 
   def respond(message: Message): Option[Message] = message match {
-    case PrivateMessage(from, text) => prepareResponse(text).map(Response(from, _))
+    case Message.ChatMessage(from, text) => prepareResponse(text).map(Message.ChatMessage(from, _))
     case _ => None
   }
 

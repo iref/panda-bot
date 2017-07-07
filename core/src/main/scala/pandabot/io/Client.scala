@@ -5,7 +5,7 @@ import java.util.concurrent.{ Executors, ExecutorService }
 import scala.util.Try
 
 import rx.lang.scala.Observable
-import pandabot.{ Join, Message }
+import pandabot.Message
 
 trait IrcClient {
   def source: ConnectionSource
@@ -18,7 +18,7 @@ trait IrcClient {
   } yield ()
 
   def listen(channels: Seq[String]): Observable[String] = {
-    channels.map(Join(_)).foreach(write(_))
+    /*channels.map(Join(_)).foreach(write(_))
 
     Observable[String](subscriber => {
       executor.execute(new Runnable {
@@ -39,12 +39,14 @@ trait IrcClient {
           }
         }
       })
-    })
+    })*/
+    ???
   }
 
   def write(message: Message): Try[Unit] = {
-    val msg = Message.print(message)
-    source.write(msg)
+    // val msg = Encoder.encode(message)
+    // source.write(msg)
+    ???
   }
 
   def shutdown: Try[Unit] = source.shutdown

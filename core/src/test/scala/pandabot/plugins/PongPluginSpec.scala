@@ -1,25 +1,26 @@
 package pandabot.plugins
 
-import pandabot._
+import pandabot.PandaBotSpec
+import pandabot.parameters.Target
 
 class PongPluginSpecs extends PandaBotSpec {
+  import pandabot.Message._
 
   val pongPlugin = new PongPlugin()
+
+  val octocat = Target.Nickname("octocat")
 
   behavior of "PongPlugin"
 
   it should "respond to ping message" in {
     val hash = "abcde1234"
-    pongPlugin.respond(new Ping(hash)) shouldEqual Some(new Pong(hash))
+    pongPlugin.respond(Ping(hash)) shouldEqual Some(Pong(hash))
   }
 
   it should "not respond to other type of messages" in {
-    pongPlugin.respond(Unknown) should not be defined
-    pongPlugin.respond(new Notice("Message")) should not be defined
-    val privMessage = new PrivateMessage("noone", "This is weird msg")
-    pongPlugin.respond(privMessage) should not be defined
-    pongPlugin.respond(new Response("noo", "this is strange")) should not be defined
-    pongPlugin.respond(new Pong("ponging")) should not be defined
+    pongPlugin.respond(Notice(octocat, "Message")) should not be defined
+    pongPlugin.respond(ChatMessage(octocat, "This is weird msg")) should not be defined
+    pongPlugin.respond(Pong("ponging")) should not be defined
   }
 
 }

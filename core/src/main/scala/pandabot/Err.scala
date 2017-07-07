@@ -54,4 +54,6 @@ object Err {
     val parameterName = "Hostname"
     def message = s"$parameterDescription must be shorter than 264 charatecters."
   }
+
+  final case class DecodingErr(message: String) extends Err
 }
